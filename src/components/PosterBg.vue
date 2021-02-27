@@ -12,7 +12,8 @@ export default {
     }
   },
   data: () => ({
-    defaultPosterBg: "linear-gradient(45deg, rgb(0, 3, 38) 0%, rgb(82, 15, 117) 100%)"
+    defaultPosterBg:
+      "linear-gradient(45deg,rgb(0, 3, 38) 0%,rgb(82, 15, 117) 100%)"
   }),
   computed: {
     posterStyle() {
@@ -48,6 +49,10 @@ export default {
   right: 0;
   bottom: 0;
   opacity: 0.7;
-  background-image: linear-gradient(45deg, rgb(0, 3, 38) 0%, rgb(82, 15, 117) 100%);
+  background-image: linear-gradient(
+    45deg,
+    rgb(0, 3, 38) 0%,
+    rgb(82, 15, 117) 100%
+  );
 }
 </style>

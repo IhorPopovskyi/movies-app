@@ -48,7 +48,7 @@ export default {
 }
 
 .movie-item:hover {
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.7);
   transform: scale(1.02);
 }
 
@@ -56,8 +56,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
   bottom: 0;
+  right: 0;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

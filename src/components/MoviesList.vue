@@ -4,7 +4,10 @@
     <BRow>
       <template v-if="isExist">
         <BCol cols="3" v-for="(movie, key) in list" :key="key">
-          <MovieItem :movie="movie" @mouseover.native="onMouseOver(movie.Poster)" />
+          <MovieItem
+            :movie="movie"
+            @mouseover.native="onMouseOver(movie.Poster)"
+          />
         </BCol>
       </template>
       <template v-else>
@@ -15,16 +18,18 @@
 </template>
 
 <script>
-import MovieItem from "@/components/MovieItem";
+import MovieItem from "./MovieItem";
 
 export default {
   name: "MoviesList",
-  components: { MovieItem },
   props: {
     list: {
       type: Object,
       default: () => ({})
     }
+  },
+  components: {
+    MovieItem
   },
   computed: {
     isExist() {
@@ -42,7 +47,7 @@ export default {
 <style scoped>
 .list-title {
   font-size: 50px;
-  color: #fff;
   margin-bottom: 30px;
+  color: #fff;
 }
 </style>
