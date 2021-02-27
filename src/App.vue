@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <PosterBg />
-    <MoviesList :list="moviesList" />
+    <PosterBg :poster="posterBg"/>
+    <MoviesList :list="moviesList" @changePoster="onChangePoster"/>
   </div>
 </template>
 
@@ -12,12 +12,18 @@ import PosterBg from "@/components/PosterBg";
 
 export default {
   name: "App",
+  data: () => ({
+    posterBg: ""
+  }),
   components: { MoviesList, PosterBg },
   computed: {
     ...mapGetters("movies", ["moviesList"])
   },
   methods: {
-    ...mapActions("movies", ["fetchMovies"])
+    ...mapActions("movies", ["fetchMovies"]),
+    onChangePoster(poster) {
+      this.posterBg = poster;
+    }
   }
 };
 </script>
