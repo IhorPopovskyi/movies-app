@@ -5,9 +5,9 @@
       <template v-if="isExist">
         <BCol cols="3" v-for="(movie, key) in list" :key="key">
           <MovieItem
-            :movie="movie"
-            @mouseover.native="onMouseOver(movie.Poster)"
-            @removeItem="onRemoveItem"
+              :movie="movie"
+              @mouseover.native="onMouseOver(movie.Poster)"
+              @removeItem="onRemoveItem"
           />
         </BCol>
       </template>
@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     ...mapActions("movies", ["removeMovie"]),
+    ...mapActions(["showNotify"]),
     onMouseOver(poster) {
       this.$emit("changePoster", poster);
     },
@@ -51,6 +52,11 @@ export default {
       const isConfirmed = await this.$bvModal.msgBoxConfirm(`Are you sure delete ${title}?`);
       if (isConfirmed) {
         this.removeMovie(id);
+        this.showNotify( {
+          msg: "Movie deleted successfully",
+          variant: "success",
+          title: "Success"
+        });
       }
     }
   }
