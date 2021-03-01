@@ -5,9 +5,10 @@
       <template v-if="isExist">
         <BCol cols="3" v-for="(movie, key) in list" :key="key">
           <MovieItem
-              :movie="movie"
-              @mouseover.native="onMouseOver(movie.Poster)"
-              @removeItem="onRemoveItem"
+            :movie="movie"
+            @mouseover.native="onMouseOver(movie.Poster)"
+            @removeItem="onRemoveItem"
+            @showModal="onShowMovieInfo"
           />
         </BCol>
       </template>
@@ -15,12 +16,16 @@
         <div>Empty list</div>
       </template>
     </BRow>
+    <BModal body-class="movie-modal-body" :id="movieInfoModalID" size="xl" hide-header hide-footer>
+      <MovieInfoModalContent :movie="selectedMovie" @closeModal="onCloseModal"/>
+    </BModal>
   </BContainer>
 </template>
 
 <script>
 import MovieItem from "./MovieItem";
 import { mapActions, mapGetters } from "vuex";
+import MovieInfoModalContent from "@/components/MovieInfoModalContent";
 
 export default {
   name: "MoviesList",
@@ -30,7 +35,12 @@ export default {
       default: () => ({})
     }
   },
+  data: () => ({
+    movieInfoModalID: "movie-info",
+    selectedMovieId: ""
+  }),
   components: {
+    MovieInfoModalContent,
     MovieItem
   },
   computed: {
@@ -40,6 +50,9 @@ export default {
     },
     listTitle() {
       return this.isSearch ? "Search result:" : "IMDB Top 250";
+    },
+    selectedMovie() {
+      return this.selectedMovieId ? this.list[this.selectedMovieId] : null;
     }
   },
   methods: {
@@ -52,12 +65,20 @@ export default {
       const isConfirmed = await this.$bvModal.msgBoxConfirm(`Are you sure delete ${title}?`);
       if (isConfirmed) {
         this.removeMovie(id);
-        this.showNotify( {
+        this.showNotify({
           msg: "Movie deleted successfully",
           variant: "success",
           title: "Success"
         });
       }
+    },
+    onShowMovieInfo(id) {
+      this.selectedMovieId = id;
+      this.$bvModal.show(this.movieInfoModalID);
+    },
+    onCloseModal() {
+      this.selectedMovieId = null;
+      this.$bvModal.hide(this.movieInfoModalID);
     }
   }
 };
@@ -68,5 +89,11 @@ export default {
   font-size: 50px;
   margin-bottom: 30px;
   color: #fff;
+}
+</style>
+
+<style>
+.movie-modal-body {
+  padding: 0 !important;
 }
 </style>
